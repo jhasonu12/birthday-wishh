@@ -131,6 +131,7 @@ export default function Home() {
   const [puzzleSolved, setPuzzleSolved] = useState(false);
   const [poppedBalloons, setPoppedBalloons] = useState<boolean[]>(() => BALLOON_WORDS.map(() => false));
   const albumScrollerRef = useRef<HTMLDivElement | null>(null);
+  const touchDragSourceRef = useRef<number | null>(null);
   const [messageStage, setMessageStage] = useState(0);
 
   useEffect(() => {
@@ -210,6 +211,44 @@ export default function Home() {
   };
 
   const handleDragEnd = () => {
+    setDragSource(null);
+    setDragOver(null);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent, index: number) => {
+    if (puzzleSolved) return;
+    e.preventDefault();
+    touchDragSourceRef.current = index;
+    setDragSource(index);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement | null;
+    const idx = el ? Number(el.dataset.puzzleIndex) : NaN;
+    if (!isNaN(idx) && idx !== touchDragSourceRef.current) {
+      setDragOver(idx);
+    } else {
+      setDragOver(null);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    const touch = e.changedTouches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement | null;
+    const targetIdx = el ? Number(el.dataset.puzzleIndex) : NaN;
+    const sourceIdx = touchDragSourceRef.current;
+    if (sourceIdx !== null && !isNaN(targetIdx) && targetIdx !== sourceIdx && !puzzleSolved) {
+      setTiles((current) => {
+        const next = [...current];
+        [next[sourceIdx], next[targetIdx]] = [next[targetIdx], next[sourceIdx]];
+        if (isSolved(next)) setPuzzleSolved(true);
+        return next;
+      });
+    }
+    touchDragSourceRef.current = null;
     setDragSource(null);
     setDragOver(null);
   };
@@ -537,12 +576,16 @@ export default function Home() {
                   return (
                     <div
                       key={`${piece}-${index}`}
+                      data-puzzle-index={index}
                       draggable={!puzzleSolved}
                       onDragStart={() => handleDragStart(index)}
                       onDragOver={(e) => handleDragOver(e, index)}
                       onDragLeave={() => setDragOver(null)}
                       onDrop={(e) => handleDrop(e, index)}
                       onDragEnd={handleDragEnd}
+                      onTouchStart={(e) => handleTouchStart(e, index)}
+                      onTouchMove={handleTouchMove}
+                      onTouchEnd={handleTouchEnd}
                       className={`h-[96px] w-[96px] cursor-grab overflow-hidden rounded-md border transition-all duration-150 active:cursor-grabbing ${
                         isSource
                           ? "scale-90 opacity-50 border-fuchsia-400 ring-2 ring-fuchsia-300"
@@ -554,13 +597,14 @@ export default function Home() {
                         backgroundImage: `url(${PUZZLE_IMAGE_SRC})`,
                         backgroundSize: "300% 300%",
                         backgroundPosition: `${col * 50}% ${row * 50}%`,
+                        touchAction: "none",
                       }}
                     />
                   );
                 })}
               </div>
 
-              <p className="mt-3 text-xs text-slate-500">Tip: drag a tile onto another to swap them.</p>
+              <p className="mt-3 text-xs text-slate-500">Tip: drag (or touch &amp; slide) a tile onto another to swap them.</p>
 
               {puzzleSolved ? (
                 <motion.div
