@@ -132,6 +132,7 @@ export default function Home() {
   const [poppedBalloons, setPoppedBalloons] = useState<boolean[]>(() => BALLOON_WORDS.map(() => false));
   const albumScrollerRef = useRef<HTMLDivElement | null>(null);
   const touchDragSourceRef = useRef<number | null>(null);
+  const clearStorageTimerRef = useRef<number | null>(null);
   const [messageStage, setMessageStage] = useState(0);
 
   useEffect(() => {
@@ -162,10 +163,26 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (clearStorageTimerRef.current !== null) {
+        window.clearTimeout(clearStorageTimerRef.current);
+      }
+    };
+  }, []);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (code.trim() === SITE_ENTRY_CODE) {
+    if (code.trim().toLowerCase() === SITE_ENTRY_CODE.toLowerCase()) {
       localStorage.setItem(SITE_GATE_STORAGE_KEY, "1");
+
+      if (clearStorageTimerRef.current !== null) {
+        window.clearTimeout(clearStorageTimerRef.current);
+      }
+      clearStorageTimerRef.current = window.setTimeout(() => {
+        localStorage.clear();
+      }, 5000);
+
       setError("");
       setScreen("ready");
       return;
