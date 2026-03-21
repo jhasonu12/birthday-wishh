@@ -13,8 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Birthday Vault",
-  description: "A private birthday surprise vault",
+  title: "Happy Birthday Pallavi 🎂💖",
+  description: "A special birthday surprise for Pallavi, made with love 💖",
+  openGraph: {
+    title: "Happy Birthday Pallavi 🎂💖",
+    description: "A special birthday surprise for Pallavi, made with love 💖",
+    images: [
+      {
+        url: "/photos/ayesha/puzzle.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Happy Birthday Pallavi",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Happy Birthday Pallavi 🎂💖",
+    description: "A special birthday surprise for Pallavi, made with love 💖",
+    images: ["/photos/ayesha/puzzle.jpg"],
+  },
 };
 
 export default function RootLayout({

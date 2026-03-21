@@ -134,6 +134,24 @@ export default function Home() {
   const touchDragSourceRef = useRef<number | null>(null);
   const clearStorageTimerRef = useRef<number | null>(null);
   const [messageStage, setMessageStage] = useState(0);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const target = new Date("2026-03-25T00:00:00").getTime();
+    const tick = () => {
+      const now = Date.now();
+      const diff = Math.max(0, target - now);
+      setCountdown({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem(SITE_GATE_STORAGE_KEY) === "1") {
@@ -361,8 +379,32 @@ export default function Home() {
               transition={{ duration: 0.4, delay: 0.1 }}
               className="mt-2 text-slate-600"
             >
-              Use the birthday vault code to continue.
+              Only a Cutiepie knows the secret code 💖
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.2 }}
+              className="mt-5 flex items-center justify-center gap-3"
+            >
+              {[
+                { label: "Days", value: countdown.days },
+                { label: "Hrs", value: countdown.hours },
+                { label: "Min", value: countdown.minutes },
+                { label: "Sec", value: countdown.seconds },
+              ].map((unit) => (
+                <div key={unit.label} className="flex flex-col items-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-b from-fuchsia-100 to-pink-100 text-2xl font-extrabold text-fuchsia-700 shadow-inner">
+                    {String(unit.value).padStart(2, "0")}
+                  </span>
+                  <span className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {unit.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+            <p className="mt-2 text-xs font-semibold text-fuchsia-400">until the big day 🎂</p>
 
             <input
               value={code}
@@ -373,6 +415,7 @@ export default function Home() {
               placeholder="Enter passkey"
               className="mt-6 w-full rounded-xl border border-fuchsia-300 bg-white/90 px-4 py-3 text-center text-lg font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-fuchsia-300"
             />
+            <p className="mt-2 text-xs text-slate-400">Hint: What do we call each other?</p>
 
             {error ? <p className="mt-3 text-sm font-semibold text-rose-500">{error}</p> : null}
 
