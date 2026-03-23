@@ -12,7 +12,7 @@ const cuteFont = Baloo_2({
   weight: ["500", "700", "800"],
 });
 
-type Screen = "loading" | "passkey" | "ready" | "decorate" | "candle" | "puzzle" | "balloons" | "album" | "message";
+type Screen = "loading" | "passkey" | "ready" | "decorate" | "candle" | "puzzle" | "balloons" | "album" | "message" | "giftbox" | "finale";
 const PUZZLE_IMAGE_SRC = "/photos/ayesha/puzzle.jpg";
 const BALLOON_WORDS = ["You", "are", "a", "Cutiee"];
 const ALBUM_PHOTOS = [
@@ -75,6 +75,65 @@ function ThemeShell({ children }: { children: React.ReactNode }) {
       >
         <Star className="h-9 w-9 fill-rose-200/60" />
       </motion.div>
+
+      {/* Extra floating hearts */}
+      <motion.div
+        animate={{ y: [0, -14, 0] }}
+        transition={{ duration: 3.2, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute left-[15%] top-[30%] text-pink-300"
+      >
+        <Heart className="h-7 w-7 fill-pink-200/50" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [0, 12, -12, 0] }}
+        transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute right-[12%] top-[40%] text-rose-400"
+      >
+        <Heart className="h-6 w-6 fill-rose-200/40" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute left-[40%] top-[8%] text-fuchsia-300"
+      >
+        <Heart className="h-8 w-8 fill-fuchsia-200/50" />
+      </motion.div>
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], y: [0, -6, 0] }}
+        transition={{ duration: 3.0, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute right-[25%] bottom-[25%] text-pink-400"
+      >
+        <Heart className="h-9 w-9 fill-pink-200/45" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -9, 0] }}
+        transition={{ duration: 2.9, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute left-[8%] bottom-[40%] text-rose-300"
+      >
+        <Heart className="h-6 w-6 fill-rose-300/40" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -11, 0], rotate: [0, -10, 10, 0] }}
+        transition={{ duration: 3.4, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute right-[5%] top-[60%] text-fuchsia-400"
+      >
+        <Heart className="h-7 w-7 fill-fuchsia-200/50" />
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 2.7, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute left-[55%] bottom-[8%] text-rose-400"
+      >
+        <Heart className="h-5 w-5 fill-rose-300/50" />
+      </motion.div>
+      <motion.div
+        animate={{ scale: [1, 1.1, 1], y: [0, -7, 0] }}
+        transition={{ duration: 3.1, repeat: Number.POSITIVE_INFINITY }}
+        className="pointer-events-none absolute right-[40%] top-[18%] text-pink-300"
+      >
+        <Heart className="h-8 w-8 fill-pink-200/55" />
+      </motion.div>
+
       {children}
     </section>
   );
@@ -457,7 +516,7 @@ export default function Home() {
                 transition={{ duration: 0.45, delay: 0.1 }}
                 className="mt-3 text-[20px] font-medium text-slate-500"
               >
-                Yes, it&apos;s YOU! A little surprise awaits...
+                Yes, it&apos;s YOU Pakodi😘! A little surprise awaits...
               </motion.p>
 
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
@@ -586,18 +645,14 @@ export default function Home() {
                 transition={{ duration: 0.35 }}
                 className="mt-3 text-sm text-fuchsia-500"
               >
-                {candleLit ? "🌟 Wish made! Opening your surprise..." : "Ready to make a wish? 💖"}
+                {candleLit ? "🌟 Wish made! Now open your surprise 💝" : "Ready to make a wish? 💖"}
               </motion.p>
 
               <motion.button
                 type="button"
-                disabled={candleLit || navigating}
+                disabled={candleLit}
                 onClick={() => {
                   setCandleLit(true);
-                  setNavigating(true);
-                  setTimeout(() => {
-                    startPuzzle();
-                  }, 2200);
                 }}
                 whileHover={{ scale: candleLit ? 1 : 1.03 }}
                 whileTap={{ scale: candleLit ? 1 : 0.97 }}
@@ -609,6 +664,21 @@ export default function Home() {
               >
                 {candleLit ? "🔥 Candle is lit!" : "🔥 Light the Candle"}
               </motion.button>
+
+              {candleLit ? (
+                <motion.button
+                  type="button"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                  onClick={() => startPuzzle()}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-violet-200 to-fuchsia-200 px-5 py-3 text-[20px] font-semibold text-violet-700 shadow-[inset_0_-4px_8px_rgba(168,85,247,0.18)] hover:brightness-105 transition"
+                >
+                  🎁 Open Your Surprise
+                </motion.button>
+              ) : null}
             </div>
           </div>
         </ThemeShell>
@@ -1000,7 +1070,7 @@ export default function Home() {
               <motion.button
                 type="button"
                 onClick={() => {
-                  window.location.href = "/b/ayesha-2026";
+                  setScreen("giftbox");
                 }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -1008,6 +1078,350 @@ export default function Home() {
               >
                 Next →
               </motion.button>
+            </div>
+          </motion.div>
+        </ThemeShell>
+      ) : null}
+
+      {screen === "giftbox" ? (
+        <ThemeShell>
+          {/* Soft radial glow behind box */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-fuchsia-200/40 via-pink-100/20 to-transparent blur-2xl" />
+
+          {/* Floating confetti dots */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            {[
+              { color: "bg-pink-400",    left: "8%",  delay: "0s",    dur: "2.2s" },
+              { color: "bg-yellow-300",  left: "18%", delay: "0.3s",  dur: "2.5s" },
+              { color: "bg-violet-400",  left: "30%", delay: "0.1s",  dur: "2.0s" },
+              { color: "bg-cyan-300",    left: "45%", delay: "0.5s",  dur: "2.4s" },
+              { color: "bg-rose-400",    left: "58%", delay: "0.2s",  dur: "2.1s" },
+              { color: "bg-amber-300",   left: "70%", delay: "0.4s",  dur: "2.6s" },
+              { color: "bg-fuchsia-400", left: "82%", delay: "0.15s", dur: "2.3s" },
+              { color: "bg-lime-300",    left: "92%", delay: "0.35s", dur: "2.0s" },
+            ].map((c, i) => (
+              <div
+                key={i}
+                className={`animate-confetti absolute top-0 h-2 w-2 rounded-full ${c.color}`}
+                style={{ left: c.left, animationDelay: c.delay, animationDuration: c.dur }}
+              />
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className={`mx-auto flex w-full max-w-md flex-col items-center px-4 ${cuteFont.className}`}
+          >
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="mb-8 text-[24px] font-extrabold text-fuchsia-700 drop-shadow-[0_2px_6px_rgba(217,70,239,0.25)]"
+            >
+              You have a gift! Tap to open 💝
+            </motion.p>
+
+            {/* Floating gift box — tap to open */}
+            <motion.button
+              type="button"
+              onClick={() => setScreen("finale")}
+              animate={{ y: [0, -20, 0], rotate: [0, 1.5, -1.5, 0] }}
+              transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              whileTap={{ scale: 0.88 }}
+              className="relative mx-auto h-64 w-64 cursor-pointer focus:outline-none"
+            >
+              {/* Animated glow ring */}
+              <motion.div
+                animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
+                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                className="absolute bottom-10 left-1/2 h-40 w-48 -translate-x-1/2 rounded-full bg-gradient-to-r from-fuchsia-300/30 via-pink-200/30 to-violet-300/30 blur-xl"
+              />
+
+              {/* Shadow on ground */}
+              <motion.div
+                animate={{ scale: [1, 0.82, 1], opacity: [0.22, 0.08, 0.22] }}
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                className="absolute -bottom-1 left-1/2 h-6 w-40 -translate-x-1/2 rounded-full bg-fuchsia-500/20 blur-lg"
+              />
+
+              {/* Box body — vibrant gradient */}
+              <div className="absolute bottom-6 left-1/2 h-28 w-44 -translate-x-1/2 rounded-2xl bg-gradient-to-br from-fuchsia-400 via-pink-400 to-rose-400 shadow-[inset_0_-6px_14px_rgba(0,0,0,0.12),0_12px_32px_rgba(236,72,153,0.35)]" />
+              {/* Box body highlight */}
+              <div className="absolute bottom-[5.5rem] left-1/2 h-5 w-36 -translate-x-1/2 rounded-full bg-white/20" />
+
+              {/* Polka dots on box */}
+              <div className="absolute bottom-10 left-[3.2rem] h-3 w-3 rounded-full bg-white/25" />
+              <div className="absolute bottom-14 left-[4.8rem] h-2.5 w-2.5 rounded-full bg-white/20" />
+              <div className="absolute bottom-9 right-[3.2rem] h-3 w-3 rounded-full bg-white/25" />
+              <div className="absolute bottom-[3.5rem] right-[4.8rem] h-2.5 w-2.5 rounded-full bg-white/20" />
+              <div className="absolute bottom-12 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white/15" />
+
+              {/* Ribbon vertical — golden */}
+              <div className="absolute bottom-6 left-1/2 h-28 w-6 -translate-x-1/2 rounded-sm bg-gradient-to-b from-amber-300 via-yellow-300 to-amber-400 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.08)]" />
+              {/* Ribbon horizontal — golden */}
+              <div className="absolute bottom-[3.75rem] left-1/2 h-6 w-44 -translate-x-1/2 rounded-sm bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-400 shadow-[inset_0_-2px_4px_rgba(0,0,0,0.08)]" />
+
+              {/* Lid — vibrant gradient */}
+              <div className="absolute bottom-[7.5rem] left-1/2 h-10 w-48 -translate-x-1/2 rounded-2xl bg-gradient-to-br from-fuchsia-500 via-pink-400 to-rose-400 shadow-[0_4px_12px_rgba(236,72,153,0.3)]">
+                {/* Lid highlight */}
+                <div className="absolute left-4 top-1.5 h-2 w-24 rounded-full bg-white/25" />
+                {/* Lid ribbon */}
+                <div className="absolute left-1/2 top-0 h-full w-6 -translate-x-1/2 bg-gradient-to-b from-amber-300 to-yellow-300 opacity-80" />
+              </div>
+
+              {/* Bow — large & decorative */}
+              <motion.div
+                animate={{ scale: [1, 1.08, 1] }}
+                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                className="absolute bottom-[9.8rem] left-1/2 -translate-x-1/2"
+              >
+                {/* Bow loops */}
+                <div className="absolute -left-5 -top-1 h-7 w-7 rotate-[-20deg] rounded-full bg-gradient-to-br from-amber-400 to-yellow-300 shadow-md" />
+                <div className="absolute -right-5 -top-1 h-7 w-7 rotate-[20deg] rounded-full bg-gradient-to-br from-amber-400 to-yellow-300 shadow-md" />
+                {/* Bow center knot */}
+                <div className="relative z-10 h-5 w-5 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg ring-2 ring-amber-300/50" />
+                {/* Bow tails */}
+                <div className="absolute left-0 top-4 h-5 w-2 -rotate-12 rounded-b-full bg-gradient-to-b from-amber-400 to-yellow-300" />
+                <div className="absolute right-0 top-4 h-5 w-2 rotate-12 rounded-b-full bg-gradient-to-b from-amber-400 to-yellow-300" />
+              </motion.div>
+
+              {/* Floating sparkles & hearts */}
+              <motion.span
+                animate={{ y: [0, -14, 0], scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY }}
+                className="absolute -left-5 top-12 text-3xl pointer-events-none"
+              >✨</motion.span>
+              <motion.span
+                animate={{ y: [0, -10, 0], scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2.2, repeat: Number.POSITIVE_INFINITY, delay: 0.4 }}
+                className="absolute -right-5 top-10 text-3xl pointer-events-none"
+              >💖</motion.span>
+              <motion.span
+                animate={{ y: [0, -16, 0], opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, delay: 0.2 }}
+                className="absolute left-0 -top-3 text-2xl pointer-events-none"
+              >💗</motion.span>
+              <motion.span
+                animate={{ y: [0, -12, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, delay: 0.6 }}
+                className="absolute right-0 -top-2 text-2xl pointer-events-none"
+              >🌸</motion.span>
+              <motion.span
+                animate={{ y: [0, -11, 0], rotate: [0, 20, -20, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.6, repeat: Number.POSITIVE_INFINITY, delay: 0.8 }}
+                className="absolute -left-2 bottom-16 text-2xl pointer-events-none"
+              >🎀</motion.span>
+              <motion.span
+                animate={{ y: [0, -9, 0], opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 1 }}
+                className="absolute -right-1 bottom-20 text-xl pointer-events-none"
+              >⭐</motion.span>
+            </motion.button>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0.4, 0.9, 0.4] }}
+              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+              className="mt-4 text-base font-bold text-fuchsia-400 drop-shadow-[0_1px_4px_rgba(217,70,239,0.2)]"
+            >
+              Tap the gift box ☝️
+            </motion.p>
+          </motion.div>
+        </ThemeShell>
+      ) : null}
+
+      {screen === "finale" ? (
+        <ThemeShell>
+          {/* Confetti burst */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            {[
+              { color: "bg-pink-400",    left: "10%", delay: "0s",    dur: "1.6s", size: "w-2.5 h-3",   rot: "rotate-12" },
+              { color: "bg-yellow-400",  left: "20%", delay: "0.12s", dur: "1.4s", size: "w-2 h-2.5",   rot: "rotate-45" },
+              { color: "bg-violet-400",  left: "32%", delay: "0.06s", dur: "1.7s", size: "w-3 h-2",     rot: "-rotate-12" },
+              { color: "bg-rose-400",    left: "44%", delay: "0.18s", dur: "1.5s", size: "w-2 h-3",     rot: "rotate-6" },
+              { color: "bg-cyan-400",    left: "55%", delay: "0.03s", dur: "1.8s", size: "w-3 h-2.5",   rot: "-rotate-45" },
+              { color: "bg-fuchsia-400", left: "66%", delay: "0.1s",  dur: "1.5s", size: "w-2 h-3",     rot: "rotate-30" },
+              { color: "bg-amber-400",   left: "77%", delay: "0.22s", dur: "1.3s", size: "w-2.5 h-2",   rot: "-rotate-6" },
+              { color: "bg-lime-400",    left: "88%", delay: "0.15s", dur: "1.6s", size: "w-2 h-3",     rot: "rotate-45" },
+              { color: "bg-pink-300",    left: "5%",  delay: "0.25s", dur: "1.4s", size: "w-2 h-2",     rot: "-rotate-12" },
+              { color: "bg-violet-300",  left: "95%", delay: "0.08s", dur: "1.7s", size: "w-2 h-3",     rot: "rotate-6" },
+            ].map((c, i) => (
+              <div
+                key={i}
+                className={`animate-confetti absolute top-0 rounded-sm ${c.color} ${c.size} ${c.rot}`}
+                style={{ left: c.left, animationDelay: c.delay, animationDuration: c.dur }}
+              />
+            ))}
+          </div>
+
+          {/* Bunting */}
+          <div className="pointer-events-none absolute inset-x-0 top-3 flex items-start justify-center gap-2 text-xl">
+            <span className="text-pink-300">▼</span>
+            <span className="text-yellow-300">▼</span>
+            <span className="text-violet-300">▼</span>
+            <span className="text-rose-300">▼</span>
+            <span className="text-pink-300">▼</span>
+            <span className="text-yellow-300">▼</span>
+            <span className="text-violet-300">▼</span>
+            <span className="text-rose-300">▼</span>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className={`mx-auto w-full max-w-md rounded-[2rem] border border-rose-100 bg-white/80 p-4 shadow-[0_20px_50px_rgba(236,72,153,0.2)] backdrop-blur ${cuteFont.className}`}
+          >
+            <div className="rounded-[1.5rem] bg-gradient-to-b from-rose-50 via-pink-50 to-white p-6 text-center shadow-inner">
+
+              {/* Gift box with character */}
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5, type: "spring" }}
+                className="relative mx-auto mb-2 h-56 w-56"
+              >
+                {/* Glow behind box */}
+                <div className="absolute bottom-4 left-1/2 h-36 w-44 -translate-x-1/2 rounded-full bg-gradient-to-r from-fuchsia-300/25 via-pink-200/20 to-violet-300/25 blur-xl" />
+
+                {/* Box body — vibrant gradient */}
+                <div className="absolute bottom-0 left-1/2 h-24 w-40 -translate-x-1/2 rounded-2xl bg-gradient-to-br from-fuchsia-400 via-pink-400 to-rose-400 shadow-[inset_0_-6px_14px_rgba(0,0,0,0.12),0_10px_28px_rgba(236,72,153,0.3)]" />
+                {/* Box body highlight */}
+                <div className="absolute bottom-[5rem] left-1/2 h-4 w-32 -translate-x-1/2 rounded-full bg-white/20" />
+
+                {/* Polka dots on box */}
+                <div className="absolute bottom-4 left-[2.6rem] h-2.5 w-2.5 rounded-full bg-white/25" />
+                <div className="absolute bottom-8 left-[4rem] h-2 w-2 rounded-full bg-white/20" />
+                <div className="absolute bottom-3 right-[2.6rem] h-2.5 w-2.5 rounded-full bg-white/25" />
+                <div className="absolute bottom-7 right-[4rem] h-2 w-2 rounded-full bg-white/20" />
+
+                {/* Box ribbon vertical — golden */}
+                <div className="absolute bottom-0 left-1/2 h-24 w-5 -translate-x-1/2 rounded-sm bg-gradient-to-b from-amber-300 via-yellow-300 to-amber-400 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.08)]" />
+                {/* Box ribbon horizontal — golden */}
+                <div className="absolute bottom-[2.75rem] left-1/2 h-5 w-40 -translate-x-1/2 rounded-sm bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-400 shadow-[inset_0_-2px_4px_rgba(0,0,0,0.08)]" />
+
+                {/* Lid popping open — vibrant gradient */}
+                <motion.div
+                  initial={{ rotate: 0, y: 0 }}
+                  animate={{ rotate: -18, y: -14, x: -10 }}
+                  transition={{ delay: 0.6, duration: 0.4, type: "spring" }}
+                  className="absolute bottom-[5.5rem] left-1/2 h-9 w-44 -translate-x-1/2 rounded-2xl bg-gradient-to-br from-fuchsia-500 via-pink-400 to-rose-400 shadow-[0_4px_12px_rgba(236,72,153,0.3)]"
+                  style={{ transformOrigin: "left bottom" }}
+                >
+                  {/* Lid highlight */}
+                  <div className="absolute left-3 top-1.5 h-2 w-20 rounded-full bg-white/25" />
+                  {/* Lid ribbon */}
+                  <div className="absolute left-1/2 top-0 h-full w-5 -translate-x-1/2 bg-gradient-to-b from-amber-300 to-yellow-300 opacity-80" />
+                </motion.div>
+
+                {/* Bow — decorative golden */}
+                <motion.div
+                  initial={{ rotate: 0, y: 0 }}
+                  animate={{ rotate: -18, y: -14, x: -10 }}
+                  transition={{ delay: 0.6, duration: 0.4, type: "spring" }}
+                  className="absolute bottom-[7.5rem] left-1/2 -translate-x-1/2"
+                  style={{ transformOrigin: "left bottom" }}
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                  >
+                    {/* Bow loops */}
+                    <div className="absolute -left-4 -top-1 h-6 w-6 rotate-[-20deg] rounded-full bg-gradient-to-br from-amber-400 to-yellow-300 shadow-md" />
+                    <div className="absolute -right-4 -top-1 h-6 w-6 rotate-[20deg] rounded-full bg-gradient-to-br from-amber-400 to-yellow-300 shadow-md" />
+                    {/* Bow center knot */}
+                    <div className="relative z-10 h-5 w-5 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg ring-2 ring-amber-300/50" />
+                    {/* Bow tails */}
+                    <div className="absolute left-0 top-4 h-4 w-2 -rotate-12 rounded-b-full bg-gradient-to-b from-amber-400 to-yellow-300" />
+                    <div className="absolute right-0 top-4 h-4 w-2 rotate-12 rounded-b-full bg-gradient-to-b from-amber-400 to-yellow-300" />
+                  </motion.div>
+                </motion.div>
+
+                {/* Character popping out */}
+                <motion.div
+                  initial={{ y: 20, opacity: 0, scale: 0.7 }}
+                  animate={{ y: -22, opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.8, duration: 0.5, type: "spring" }}
+                  className="absolute bottom-20 left-1/2 -translate-x-1/2 text-[68px]"
+                >
+                  🐼
+                </motion.div>
+
+                {/* Floating sparkles & hearts around the box */}
+                <motion.span
+                  animate={{ y: [0, -10, 0], scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                  className="absolute -left-4 top-8 text-3xl"
+                >💗</motion.span>
+                <motion.span
+                  animate={{ y: [0, -8, 0], scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2.3, repeat: Number.POSITIVE_INFINITY, delay: 0.3 }}
+                  className="absolute -right-4 top-10 text-3xl"
+                >💖</motion.span>
+                <motion.span
+                  animate={{ y: [0, -14, 0], opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+                  className="absolute left-0 -top-1 text-2xl"
+                >✨</motion.span>
+                <motion.span
+                  animate={{ y: [0, -9, 0], opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2.1, repeat: Number.POSITIVE_INFINITY, delay: 0.7 }}
+                  className="absolute right-0 top-1 text-2xl"
+                >🌸</motion.span>
+                <motion.span
+                  animate={{ y: [0, -11, 0], rotate: [0, 20, -20, 0], opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.6, repeat: Number.POSITIVE_INFINITY, delay: 0.9 }}
+                  className="absolute -left-2 bottom-10 text-2xl"
+                >🎀</motion.span>
+                <motion.span
+                  animate={{ y: [0, -7, 0], opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 1.1 }}
+                  className="absolute -right-1 bottom-14 text-xl"
+                >⭐</motion.span>
+              </motion.div>
+
+              {/* Main text */}
+              <motion.h2
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.0, duration: 0.4 }}
+                className="mt-2 text-[28px] font-extrabold leading-tight text-fuchsia-700"
+              >
+                Lots of love for you 💖
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.3, duration: 0.4 }}
+                className="mt-3 text-[17px] font-medium leading-relaxed text-slate-500"
+              >
+                Once again, Happy Birthday!<br />Hope you loved your surprise. 🫶
+              </motion.p>
+
+              {/* Replay button */}
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.6, duration: 0.4 }}
+                onClick={() => {
+                  setCandleLit(false);
+                  setNavigating(false);
+                  setPoppedBalloons(BALLOON_WORDS.map(() => false));
+                  setMessageStage(0);
+                  setScreen("ready");
+                }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-100 to-pink-100 px-8 py-3 text-[18px] font-semibold text-rose-600 shadow-[0_4px_14px_rgba(244,114,182,0.2)] transition hover:brightness-105"
+              >
+                <span className="text-lg">↻</span> Replay
+              </motion.button>
+
+             
             </div>
           </motion.div>
         </ThemeShell>
