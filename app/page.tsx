@@ -16,11 +16,16 @@ type Screen = "loading" | "passkey" | "ready" | "decorate" | "candle" | "puzzle"
 const PUZZLE_IMAGE_SRC = "/photos/ayesha/puzzle.jpg";
 const BALLOON_WORDS = ["You", "are", "a", "Cutiee"];
 const ALBUM_PHOTOS = [
-  "/photos/ayesha/puzzle.jpg",
-  "/photos/ayesha/puzzle.jpg",
-  "/photos/ayesha/puzzle.jpg",
-  "/photos/ayesha/puzzle.jpg",
-  "/photos/ayesha/puzzle.jpg",
+  "/photos/ayesha/eff8bcae-bbf1-454e-8698-05a863fb2d3c.png",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%203.53.06%20PM.jpeg",
+  "/photos/ayesha/ayesha-03.jpeg",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.08%20PM.jpeg",
+  "/photos/ayesha/ayesha-05.jpeg",
+  "/photos/ayesha/ayesha-06.jpeg",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.09%20PM.jpeg",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM%20(1).jpeg",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM%20(2).jpeg",
+  "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM.jpeg",
 ];
 const LOVE_MESSAGES = [
   "You make ordinary days feel magical 💖",
@@ -969,7 +974,7 @@ export default function Home() {
                       <div className="rounded-[1.1rem] border border-white/80 bg-white p-2 shadow-[0_8px_20px_rgba(124,58,237,0.12)]">
                         <div
                           className="h-[290px] w-full rounded-[0.9rem] bg-cover bg-center"
-                          style={{ backgroundImage: `url(${photo})` }}
+                          style={{ backgroundImage: `url("${photo}")` }}
                         />
                       </div>
                     </div>

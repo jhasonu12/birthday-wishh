@@ -30,9 +30,17 @@ export const birthdays: Record<string, BirthdayPage> = {
     },
     musicSrc: "/music/ayesha-theme.mp3",
     photos: [
-      "/photos/ayesha/memory-1.jpg",
-      "/photos/ayesha/memory-2.jpg",
-      "/photos/ayesha/memory-3.jpg",
+      "/photos/ayesha/eff8bcae-bbf1-454e-8698-05a863fb2d3c.png",
+      "/photos/ayesha/puzzle.jpg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%203.53.06%20PM.jpeg",
+      "/photos/ayesha/ayesha-03.jpeg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.08%20PM.jpeg",
+      "/photos/ayesha/ayesha-05.jpeg",
+      "/photos/ayesha/ayesha-06.jpeg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.09%20PM.jpeg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM%20(1).jpeg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM%20(2).jpeg",
+      "/photos/ayesha/WhatsApp%20Image%202026-03-23%20at%205.14.10%20PM.jpeg",
     ],
     messages: [
       {

@@ -42,10 +42,14 @@ export default function BirthdayVaultPage({ slug, page }: BirthdayVaultPageProps
               {page.photos.map((photo) => (
                 <div
                   key={photo}
-                  className="rounded-2xl border border-white/15 bg-white/5 p-4 text-sm text-white/70"
+                  className="group overflow-hidden rounded-2xl border border-white/15 bg-white/5 transition-transform hover:scale-[1.03]"
                 >
-                  <div className="mb-3 h-36 rounded-xl border border-dashed border-white/20 bg-black/40" />
-                  {photo}
+                  <img
+                    src={photo}
+                    alt="Memory"
+                    className="aspect-square w-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
               ))}
             </div>
