@@ -194,6 +194,7 @@ export default function Home() {
   const [dragOver, setDragOver] = useState<number | null>(null);
   const [puzzleSolved, setPuzzleSolved] = useState(false);
   const [poppedBalloons, setPoppedBalloons] = useState<boolean[]>(() => BALLOON_WORDS.map(() => false));
+  const [albumIndex, setAlbumIndex] = useState(0);
   const albumScrollerRef = useRef<HTMLDivElement | null>(null);
   const touchDragSourceRef = useRef<number | null>(null);
   const clearStorageTimerRef = useRef<number | null>(null);
@@ -367,10 +368,19 @@ export default function Home() {
   };
 
   const openAlbum = () => {
+    setAlbumIndex(0);
     setScreen("album");
     requestAnimationFrame(() => {
       albumScrollerRef.current?.scrollTo({ left: 0, behavior: "auto" });
     });
+  };
+
+  const handleAlbumScroll = () => {
+    const scroller = albumScrollerRef.current;
+    if (!scroller) return;
+    const current = Math.round(scroller.scrollLeft / scroller.clientWidth);
+    const clamped = Math.max(0, Math.min(ALBUM_PHOTOS.length - 1, current));
+    setAlbumIndex(clamped);
   };
 
   const openMessageSlider = () => {
@@ -384,6 +394,7 @@ export default function Home() {
 
   const poppedCount = poppedBalloons.filter(Boolean).length;
   const allBalloonsPopped = poppedCount === BALLOON_WORDS.length;
+  const isLastAlbumPhoto = albumIndex === ALBUM_PHOTOS.length - 1;
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -967,6 +978,7 @@ export default function Home() {
               <div className="mt-4 rounded-[1.6rem] border border-violet-100 bg-gradient-to-b from-violet-100 to-violet-50 p-3">
                 <div
                   ref={albumScrollerRef}
+                  onScroll={handleAlbumScroll}
                   className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                 >
                   {ALBUM_PHOTOS.map((photo, index) => (
@@ -982,18 +994,20 @@ export default function Home() {
                 </div>
               </div>
 
-              <motion.button
-                type="button"
-                onClick={() => {
-                  openMessageSlider();
-                }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-violet-200 to-purple-200 px-5 py-3 text-[20px] font-semibold text-violet-700 shadow-[inset_0_-4px_8px_rgba(124,58,237,0.18)]"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Open My Message
-              </motion.button>
+              {isLastAlbumPhoto ? (
+                <motion.button
+                  type="button"
+                  onClick={() => {
+                    openMessageSlider();
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-violet-200 to-purple-200 px-5 py-3 text-[20px] font-semibold text-violet-700 shadow-[inset_0_-4px_8px_rgba(124,58,237,0.18)]"
+                >
+                  <Mail className="mr-2 h-5 w-5" />
+                  Open My Message
+                </motion.button>
+              ) : null}
             </div>
           </motion.div>
         </ThemeShell>
