@@ -28,7 +28,7 @@ export const birthdays: Record<string, BirthdayPage> = {
       accentText: "text-fuchsia-300",
       glowShadow: "shadow-[0_0_40px_rgba(217,70,239,0.28)]",
     },
-    musicSrc: "/music/ayesha-theme.mp3",
+    musicSrc: "/music/ayesha-background.mpeg",
     photos: [
       "/photos/ayesha/eff8bcae-bbf1-454e-8698-05a863fb2d3c.png",
       "/photos/ayesha/puzzle.jpg",

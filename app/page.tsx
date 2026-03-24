@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { Baloo_2 } from "next/font/google";
 import { motion } from "motion/react";
 import { Heart, Gift, Star, Cake, Mail } from "lucide-react";
+import MusicPlayer from "@/components/MusicPlayer";
 import { SITE_ENTRY_CODE, SITE_GATE_STORAGE_KEY } from "@/lib/siteAuth";
 
 const cuteFont = Baloo_2({
@@ -14,6 +15,7 @@ const cuteFont = Baloo_2({
 
 type Screen = "loading" | "passkey" | "ready" | "decorate" | "candle" | "puzzle" | "balloons" | "album" | "message" | "giftbox" | "finale";
 const PUZZLE_IMAGE_SRC = "/photos/ayesha/puzzle.jpg";
+const BACKGROUND_AUDIO_SRC = "/music/ayesha-background.mpeg";
 const BALLOON_WORDS = ["You", "are", "a", "Cutiee"];
 const ALBUM_PHOTOS = [
   "/photos/ayesha/eff8bcae-bbf1-454e-8698-05a863fb2d3c.png",
@@ -398,6 +400,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black text-white">
+      {screen !== "loading" && screen !== "passkey" ? (
+        <MusicPlayer src={BACKGROUND_AUDIO_SRC} autoStart />
+      ) : null}
+
       {screen === "loading" ? (
         <ThemeShell>
           <motion.div

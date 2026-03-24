@@ -1,22 +1,24 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type MusicPlayerProps = {
   src: string;
+  autoStart?: boolean;
 };
 
-export default function MusicPlayer({ src }: MusicPlayerProps) {
+export default function MusicPlayer({ src, autoStart = false }: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const defaultVolume = 0.35;
 
   const start = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     audio.loop = true;
-    audio.volume = 0.75;
+    audio.volume = defaultVolume;
     audio.muted = false;
 
     try {
@@ -36,6 +38,27 @@ export default function MusicPlayer({ src }: MusicPlayerProps) {
     audio.muted = nextMuted;
     setIsMuted(nextMuted);
   };
+
+  useEffect(() => {
+    if (!autoStart) return;
+
+    const audio = audioRef.current;
+    if (!audio || isStarted) return;
+
+    audio.loop = true;
+    audio.volume = defaultVolume;
+    audio.muted = false;
+
+    void audio
+      .play()
+      .then(() => {
+        setIsStarted(true);
+        setIsMuted(false);
+      })
+      .catch(() => {
+        setIsStarted(false);
+      });
+  }, [autoStart, defaultVolume, isStarted, src]);
 
   return (
     <>
